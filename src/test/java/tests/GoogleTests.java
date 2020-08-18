@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byName;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-class GoogleTest {
+
+class GoogleTests {
     @Test
     void selenideSearchTest() {
         // Открыть google
@@ -23,27 +23,30 @@ class GoogleTest {
     }
 
     @Test
-    void picturePageShouldOpen() {
+    void picturePageShouldOpenTest() {
         // Открыть google
         open("https://google.com");
 
         // Нажать вкладку "Картинки"
-        $("[data-pid='2']").click(); //обращение по кастомному атрибуту
+        // $("[data-pid='2']").click(); //обращение по кастомному атрибуту
+        $(by("data-pid", "2")).click();
+        $(byText("Картинки")).click();
 
         // Проверить наличие заголовка "Картинки Google"
-        $("[title='Картинки Google']").shouldBe(visible); //обращение по атрибуту
+        // $("[title='Картинки Google']").shouldBe(visible); //обращение по атрибуту
+        $(byTitle("Картинки Google")).shouldBe(visible);
     }
 
     @Test
-    void googleApplicationsPopupShouldOpen() {
+    void googleApplicationsPopupShouldBeExpandedTest() {
         // Открыть google
         open("https://google.com");
 
         // Нажать на ссылку выпадающего списка "Приложения Google"
-        $("#gbwa div a").click(); //обращение по CSS-селектору, полученному из XPath
+        $(byTitle("Приложения Google")).click(); //обращение по CSS-селектору, полученному из XPath
 
         // Проверить видимость выпадающего списка "Приложения Google"
-        $("#gb iframe").shouldBe(enabled); //обращение по CSS-селектору, полученному из XPath
+        $("iframe[role='presentation']").shouldBe(enabled); //обращение по CSS-селектору, полученному из XPath
     }
 
     @Test
